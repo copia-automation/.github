@@ -1,4 +1,4 @@
-<!-- As we get used to and iterate upon this template, please note that nothing here is a strict To-do, but rather a guideline to help us keep context as we scale and prevent issues -->
+<!-- This is a guideline -->
 
 ## Description
 <!-- Please provide a brief description of the changes being made -->
@@ -7,9 +7,9 @@
 <!-- Please place an "x" between brackets to mark each relevant box -->
 
 <!-- This Pull Request ... -->
-- [ ] Links to Clickup
+- [ ] Links to Project Management Tool
 - [ ] Has the appropriate PR type label (bug, feature, testing, etc.)
-- [ ] Introduces new tests on the critical code paths
+- [ ] Introduces new tests on the code paths changed
 - [ ] Has been manually verified
 - [ ] Generates no new console or log warnings/errors (manual check)
 - [ ] Documentation added/updated as applicable
