@@ -7,8 +7,8 @@
 <!-- Please place an "x" between brackets to mark each relevant box -->
 
 <!-- This Pull Request ... -->
-- [ ] Links to Project Management Tool
-- [ ] Has the appropriate PR type label (bug, feature, testing, etc.)
+- [ ] Links to Clickup
+- [ ] Follows PR title convention (`<label>:ENG-XXXX <description>`)
 - [ ] Introduces new tests on the code paths changed
 - [ ] Has been manually verified
 - [ ] Generates no new console or log warnings/errors (manual check)
