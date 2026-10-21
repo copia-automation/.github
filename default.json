@@ -6,7 +6,7 @@
   ],
   "labels": ["dependencies"],
   "rebaseWhen": "conflicted",
-  "prConcurrentLimit": 3,
+  "prConcurrentLimit": 5,
   "timezone": "America/New_York",
   "schedule": ["* 5-11 * * 0"],
   "updateNotScheduled": false,
@@ -32,7 +32,7 @@
       "enabled": false
     },
     {
-      "description": "Batch all non-major updates per manager so the 3-PR budget covers every ecosystem; majors stay individual",
+      "description": "Batch all non-major updates per manager so the 5-PR budget covers every ecosystem; majors stay individual",
       "matchManagers": ["npm", "gomod", "pep621", "pip_requirements", "dockerfile", "docker-compose", "github-actions"],
       "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
       "groupName": "{{manager}} non-major",
