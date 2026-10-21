@@ -50,8 +50,9 @@ reaches every consuming repo on its next Renovate run — no per-repo PR needed.
 - **Security updates grouped** into a single `security updates` PR that is exempt from the
   concurrency limit (Renovate's default `vulnerabilityAlerts.prConcurrentLimit: 0`), so a fix is never queued
   behind routine updates.
-- **Disabled:** `lockFileMaintenance` (`config:best-practices` turns it on weekly),
-  rollback/replacement PRs, and any update to npm `overrides`, yarn `resolutions`, or
+- **Lock file maintenance** runs weekly (from `config:best-practices`), moved into the
+  Sunday routine window so all routine dependency CI runs together.
+- **Disabled:** rollback/replacement PRs, and any update to npm `overrides`, yarn `resolutions`, or
   `pnpm.overrides`. Those are deliberate pins on transitive dependencies and stay under
   human control.
 

@@ -11,7 +11,8 @@
   "schedule": ["* 5-11 * * 0"],
   "updateNotScheduled": false,
   "lockFileMaintenance": {
-    "enabled": false
+    "description": "Enabled weekly by config:best-practices; moved from its Monday 00:00-03:59 default into the Sunday routine window",
+    "schedule": ["* 5-11 * * 0"]
   },
   "vulnerabilityAlerts": {
     "description": "Security fixes start daily between 04:00 and 08:59 and, by Renovate default, have no PR limit",
