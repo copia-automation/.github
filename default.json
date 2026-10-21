@@ -36,6 +36,62 @@
       "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
       "groupName": "{{manager}} non-major",
       "groupSlug": "{{manager}}-non-major"
+    },
+    {
+      "description": "Family group for majors: eslint, its plugins/configs and parsers must move together on a major (9 of the top 20 repos)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["eslint", "@eslint/**", "@eslint-community/**", "eslint-plugin-*", "eslint-config-*", "@typescript-eslint/**", "typescript-eslint", "@stylistic/eslint-plugin", "vue-eslint-parser", "globals"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "eslint major",
+      "groupSlug": "eslint-major"
+    },
+    {
+      "description": "Family group for majors: vite majors drag plugins and vitest with them (6 repos)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["vite", "@vitejs/**", "vite-plugin-*", "vitest", "@vitest/**"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "vite major",
+      "groupSlug": "vite-major"
+    },
+    {
+      "description": "Family group for majors: jest majors need ts-jest, babel-jest and the jest types in lockstep (5 repos)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["jest", "@jest/**", "jest-*", "ts-jest", "babel-jest", "@types/jest"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "jest major",
+      "groupSlug": "jest-major"
+    },
+    {
+      "description": "Family group for majors: react majors need react-dom and the @types packages in lockstep (7 repos)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom", "react-refresh"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "react major",
+      "groupSlug": "react-major"
+    },
+    {
+      "description": "Family group for majors: electron majors usually need the packaging toolchain bumped too (4 repos)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["electron", "@electron/**", "electron-builder", "electron-updater"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "electron major",
+      "groupSlug": "electron-major"
+    },
+    {
+      "description": "Family group for majors: webpack core and CLI/dev-server majors are coupled (4 repos)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["webpack", "webpack-cli", "@webpack-cli/**", "webpack-dev-server", "webpack-dev-middleware", "webpack-hot-middleware", "webpack-merge"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "webpack major",
+      "groupSlug": "webpack-major"
+    },
+    {
+      "description": "Family group for majors: pytest plugins track pytest majors (4 repos)",
+      "matchDatasources": ["pypi"],
+      "matchPackageNames": ["pytest", "pytest-*"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "pytest major",
+      "groupSlug": "pytest-major"
     }
   ]
 }

@@ -31,7 +31,12 @@ reaches every consuming repo on its next Renovate run — no per-repo PR needed.
   Open PRs still pick up newer versions as they are released.
 - **`prConcurrentLimit: 3`** — at most three routine update PRs open per repo.
 - **Non-major updates grouped per manager** (`{{manager}} non-major`) so three PRs cover
-  most of a repo's churn; majors get individual PRs.
+  most of a repo's churn.
+- **Majors grouped by tool family** so coupled packages upgrade together: `eslint`
+  (plugins, configs, parsers, typescript-eslint), `vite` (plugins, vitest), `jest`
+  (ts-jest, babel-jest, types), `react` (react-dom, types), `electron` (`@electron/*`,
+  electron-builder), `webpack` (CLI, dev-server), and `pytest` (plugins). The families
+  come from a scan of the 20 most active repos. Majors outside a family get their own PR.
 - **Security updates grouped** into a single `security updates` PR that is exempt from the
   concurrency limit (`vulnerabilityAlerts.prConcurrentLimit: 0`), so a fix is never queued
   behind routine updates.
