@@ -1,0 +1,38 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Copia org-wide Renovate base policy (SC-835). Extend with local>copia-automation/.github",
+  "extends": [
+    "config:best-practices",
+    "security:minimumReleaseAgeNpm"
+  ],
+  "labels": ["dependencies"],
+  "rebaseWhen": "conflicted",
+  "timezone": "America/New_York",
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "vulnerabilityAlerts": {
+    "groupName": "security updates",
+    "groupSlug": "security"
+  },
+  "packageRules": [
+    {
+      "description": "Rollbacks and replacements should be deliberate human calls, not bot PRs",
+      "matchUpdateTypes": ["rollback", "replacement"],
+      "enabled": false
+    },
+    {
+      "description": "Pinning npm ranges is noise in application repos; digest pinning still applies to Actions and Docker",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["pin", "pinDigest"],
+      "enabled": false
+    },
+    {
+      "description": "Batch patch/digest updates per manager; minors and majors stay individual so a regression can be bisected",
+      "matchManagers": ["npm", "gomod", "pep621", "pip_requirements", "dockerfile", "docker-compose", "github-actions"],
+      "matchUpdateTypes": ["patch", "digest", "pinDigest"],
+      "groupName": "{{manager}} patch",
+      "groupSlug": "{{manager}}-patch"
+    }
+  ]
+}
