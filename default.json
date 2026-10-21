@@ -1,0 +1,103 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Copia org-wide Renovate base policy. Extend with local>copia-automation/.github",
+  "extends": [
+    "config:best-practices"
+  ],
+  "labels": ["dependencies"],
+  "rebaseWhen": "conflicted",
+  "prConcurrentLimit": 5,
+  "timezone": "America/New_York",
+  "schedule": ["* 5-11 * * 0"],
+  "updateNotScheduled": false,
+  "lockFileMaintenance": {
+    "description": "Enabled weekly by config:best-practices; moved from its Monday 00:00-03:59 default into the Sunday routine window",
+    "schedule": ["* 5-11 * * 0"]
+  },
+  "vulnerabilityAlerts": {
+    "description": "Security fixes start daily between 04:00 and 08:59 and, by Renovate default, have no PR limit",
+    "groupName": "security updates",
+    "groupSlug": "security",
+    "schedule": ["* 4-8 * * *"]
+  },
+  "packageRules": [
+    {
+      "description": "Rollbacks and replacements should be deliberate human calls, not bot PRs",
+      "matchUpdateTypes": ["rollback", "replacement"],
+      "enabled": false
+    },
+    {
+      "description": "Overrides and resolutions are deliberate human pins on transitive deps; Renovate must not touch them",
+      "matchDepTypes": ["overrides", "resolutions", "pnpm.overrides"],
+      "enabled": false
+    },
+    {
+      "description": "Batch all non-major updates per manager so the 5-PR budget covers every ecosystem; majors stay individual",
+      "matchManagers": ["npm", "gomod", "pep621", "pip_requirements", "dockerfile", "docker-compose", "github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
+      "groupName": "{{manager}} non-major",
+      "groupSlug": "{{manager}}-non-major"
+    },
+    {
+      "description": "Family group for majors: eslint, its plugins/configs and parsers move together (9 of the top 20 repos). Built-in groups split them across eslint, typescript-eslint and stylistic",
+      "extends": ["packages:eslint"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "eslint major",
+      "groupSlug": "eslint-major"
+    },
+    {
+      "description": "Adds the eslint companions that packages:eslint does not list",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["globals", "vue-eslint-parser"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "eslint major",
+      "groupSlug": "eslint-major"
+    },
+    {
+      "description": "Family group for majors: vite majors drag plugins and vitest with them (6 repos). Separate rules because one rule ANDs its matchers",
+      "extends": ["packages:vite"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "vite major",
+      "groupSlug": "vite-major"
+    },
+    {
+      "description": "Adds vitest and @vitest/* to the vite major group",
+      "extends": ["monorepo:vitest"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "vite major",
+      "groupSlug": "vite-major"
+    },
+    {
+      "description": "Family group for majors: electron majors usually need the packaging toolchain bumped too (4 repos)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["electron", "@electron/**", "electron-builder", "electron-updater"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "electron major",
+      "groupSlug": "electron-major"
+    },
+    {
+      "description": "Family group for majors: webpack core and CLI/dev-server majors are coupled (4 repos)",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["webpack", "webpack-cli", "@webpack-cli/**", "webpack-dev-server", "webpack-dev-middleware", "webpack-hot-middleware", "webpack-merge"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "webpack major",
+      "groupSlug": "webpack-major"
+    },
+    {
+      "description": "Family group for majors: pytest plugins track pytest majors (4 repos)",
+      "matchDatasources": ["pypi"],
+      "matchPackageNames": ["pytest", "pytest-*"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "pytest major",
+      "groupSlug": "pytest-major"
+    },
+    {
+      "description": "Storybook packages must share one version (gitea-fork, desktop-fork). Own group so a Storybook regression cannot block the npm batch; majors split into major-storybook. Last so it beats the eslint group for eslint-plugin-storybook. The chromatic CLI versions independently",
+      "matchDatasources": ["npm"],
+      "matchPackageNames": ["storybook", "@storybook/**", "eslint-plugin-storybook", "@chromatic-com/storybook", "storybook-addon-*", "*-storybook-addon"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "groupName": "storybook",
+      "groupSlug": "storybook"
+    }
+  ]
+}
