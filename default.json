@@ -24,9 +24,8 @@
       "enabled": false
     },
     {
-      "description": "Pinning npm ranges is noise in application repos; digest pinning still applies to Actions and Docker",
-      "matchManagers": ["npm"],
-      "matchUpdateTypes": ["pin", "pinDigest"],
+      "description": "Overrides and resolutions are deliberate human pins on transitive deps; Renovate must not touch them",
+      "matchDepTypes": ["overrides", "resolutions", "pnpm.overrides"],
       "enabled": false
     },
     {

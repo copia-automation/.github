@@ -45,7 +45,9 @@ reaches every consuming repo on its next Renovate run — no per-repo PR needed.
   concurrency limit (`vulnerabilityAlerts.prConcurrentLimit: 0`), so a fix is never queued
   behind routine updates.
 - **Disabled:** `lockFileMaintenance` (`config:best-practices` turns it on weekly),
-  rollback/replacement PRs, and npm `pin`/`pinDigest`.
+  rollback/replacement PRs, and any update to npm `overrides`, yarn `resolutions`, or
+  `pnpm.overrides`. Those are deliberate pins on transitive dependencies and stay under
+  human control.
 
 ### What stays in the consuming repo
 
