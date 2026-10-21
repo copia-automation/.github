@@ -7,13 +7,16 @@
   ],
   "labels": ["dependencies"],
   "rebaseWhen": "conflicted",
+  "prConcurrentLimit": 3,
   "timezone": "America/New_York",
   "lockFileMaintenance": {
     "enabled": false
   },
   "vulnerabilityAlerts": {
+    "description": "Security fixes get their own unlimited budget on top of prConcurrentLimit (0 = no limit)",
     "groupName": "security updates",
-    "groupSlug": "security"
+    "groupSlug": "security",
+    "prConcurrentLimit": 0
   },
   "packageRules": [
     {
@@ -28,11 +31,11 @@
       "enabled": false
     },
     {
-      "description": "Batch patch/digest updates per manager; minors and majors stay individual so a regression can be bisected",
+      "description": "Batch all non-major updates per manager so the 3-PR budget covers every ecosystem; majors stay individual",
       "matchManagers": ["npm", "gomod", "pep621", "pip_requirements", "dockerfile", "docker-compose", "github-actions"],
-      "matchUpdateTypes": ["patch", "digest", "pinDigest"],
-      "groupName": "{{manager}} patch",
-      "groupSlug": "{{manager}}-patch"
+      "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
+      "groupName": "{{manager}} non-major",
+      "groupSlug": "{{manager}}-non-major"
     }
   ]
 }

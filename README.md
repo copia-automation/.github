@@ -28,9 +28,13 @@ reaches every consuming repo on its next Renovate run — no per-repo PR needed.
   `helpers:pinGitHubActionDigests`, `docker:pinDigests`, and `abandonments:recommended`.
 - **`security:minimumReleaseAgeNpm`** — npm releases must age before they are proposed.
 - **`rebaseWhen: conflicted`** — branches are rebased only when they actually conflict.
-- **Patch/digest updates grouped per manager** (`{{manager}} patch`); minors and majors
-  get individual PRs so a regression stays bisectable.
-- **Security updates grouped** into a single `security updates` PR.
+  Open PRs still pick up newer versions as they are released.
+- **`prConcurrentLimit: 3`** — at most three routine update PRs open per repo.
+- **Non-major updates grouped per manager** (`{{manager}} non-major`) so three PRs cover
+  most of a repo's churn; majors get individual PRs.
+- **Security updates grouped** into a single `security updates` PR that is exempt from the
+  concurrency limit (`vulnerabilityAlerts.prConcurrentLimit: 0`), so a fix is never queued
+  behind routine updates.
 - **Disabled:** `lockFileMaintenance`, rollback/replacement PRs, and npm `pin`/`pinDigest`.
 
 ### What stays in the consuming repo
