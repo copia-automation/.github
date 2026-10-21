@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Copia org-wide Renovate base policy (SC-835). Extend with local>copia-automation/.github",
+  "description": "Copia org-wide Renovate base policy. Extend with local>copia-automation/.github",
   "extends": [
     "config:best-practices"
   ],
