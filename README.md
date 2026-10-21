@@ -42,8 +42,8 @@ reaches every consuming repo on its next Renovate run — no per-repo PR needed.
   which have no built-in group. The families come from a scan of the 20 most active
   repos. Majors outside a family get their own PR.
 - **Schedule (America/New_York):** routine updates start Sundays between 05:00 and 11:59
-  (`schedule: ["* 5-11 * * 0"]`); security updates start daily between 05:00 and 06:59
-  (`vulnerabilityAlerts.schedule: ["* 5-6 * * *"]`). These are the quietest runner hours
+  (`schedule: ["* 5-11 * * 0"]`); security updates start daily between 04:00 and 08:59
+  (`vulnerabilityAlerts.schedule: ["* 4-8 * * *"]`). These are the quietest runner hours
   in a 28-day sample of org CI, and multi-hour windows give the hosted app several chances
   to start. `updateNotScheduled: false` keeps Renovate from rebasing or refreshing open
   branches outside those windows.
