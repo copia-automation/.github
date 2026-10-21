@@ -8,14 +8,16 @@
   "rebaseWhen": "conflicted",
   "prConcurrentLimit": 3,
   "timezone": "America/New_York",
+  "schedule": ["* 3 * * 1"],
+  "updateNotScheduled": false,
   "lockFileMaintenance": {
     "enabled": false
   },
   "vulnerabilityAlerts": {
-    "description": "Security fixes get their own unlimited budget on top of prConcurrentLimit (0 = no limit)",
+    "description": "Security fixes run daily at 06:00 and, by Renovate default, have no PR limit",
     "groupName": "security updates",
     "groupSlug": "security",
-    "prConcurrentLimit": 0
+    "schedule": ["* 6 * * *"]
   },
   "packageRules": [
     {
