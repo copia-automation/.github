@@ -41,10 +41,12 @@ reaches every consuming repo on its next Renovate run — no per-repo PR needed.
   (`@electron/*`, electron-builder), `webpack` (CLI, dev-server) and `pytest` (plugins),
   which have no built-in group. The families come from a scan of the 20 most active
   repos. Majors outside a family get their own PR.
-- **Schedule (America/New_York):** routine updates run Mondays from 03:00 to 03:59
-  (`schedule: ["* 3 * * 1"]`); security updates run daily from 06:00 to 06:59
-  (`vulnerabilityAlerts.schedule: ["* 6 * * *"]`). `updateNotScheduled: false` keeps
-  Renovate from rebasing or refreshing open branches outside those windows.
+- **Schedule (America/New_York):** routine updates start Sundays between 05:00 and 11:59
+  (`schedule: ["* 5-11 * * 0"]`); security updates start daily between 05:00 and 06:59
+  (`vulnerabilityAlerts.schedule: ["* 5-6 * * *"]`). These are the quietest runner hours
+  in a 28-day sample of org CI, and multi-hour windows give the hosted app several chances
+  to start. `updateNotScheduled: false` keeps Renovate from rebasing or refreshing open
+  branches outside those windows.
 - **Security updates grouped** into a single `security updates` PR that is exempt from the
   concurrency limit (Renovate's default `vulnerabilityAlerts.prConcurrentLimit: 0`), so a fix is never queued
   behind routine updates.
