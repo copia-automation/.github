@@ -40,8 +40,7 @@
       "enabled": false
     },
     {
-      "description": "Batch all non-major updates per manager so the 5-PR budget covers every ecosystem; majors stay individual",
-      "matchManagers": ["npm", "gomod", "pep621", "pip_requirements", "dockerfile", "docker-compose", "github-actions"],
+      "description": "Batch all non-major updates per manager (every manager, e.g. npm, gomod, nuget, poetry) so the 5-PR budget covers every ecosystem; majors stay individual",
       "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
       "groupName": "{{manager}} non-major",
       "groupSlug": "{{manager}}-non-major"
