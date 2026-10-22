@@ -12,10 +12,10 @@
   "updateNotScheduled": false,
   "hostRules": [
     {
-      "description": "Auth for private @copia-automation packages on GitHub Packages, mirroring CI's configure-npm.sh _authToken. Without it lockfile updates fail with 401",
+      "description": "Auth for private @copia-automation packages on GitHub Packages, using the RENOVATE_TOKEN secret stored in Mend (desktop-fork already uses it for this registry). Without it lockfile updates fail with 401",
       "matchHost": "npm.pkg.github.com",
       "hostType": "npm",
-      "token": "{{ secrets.GITHUB_TOKEN }}"
+      "token": "{{ secrets.RENOVATE_TOKEN }}"
     }
   ],
   "lockFileMaintenance": {
