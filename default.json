@@ -23,10 +23,8 @@
     "schedule": ["* 5-11 * * 0"]
   },
   "vulnerabilityAlerts": {
-    "description": "Security fixes start daily between 04:00 and 08:59 and, by Renovate default, have no PR limit",
-    "groupName": "security updates",
-    "groupSlug": "security",
-    "schedule": ["* 4-8 * * *"]
+    "description": "Dependabot security updates own vulnerability PRs: they fix transitive dependencies in yarn.lock, which Renovate cannot. Keep Dependabot alerts and security updates on in every repo that extends this preset",
+    "enabled": false
   },
   "packageRules": [
     {
