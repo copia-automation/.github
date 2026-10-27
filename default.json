@@ -38,7 +38,7 @@
       "enabled": false
     },
     {
-      "description": "Batch all patch updates per manager (every manager, e.g. npm, gomod, nuget, poetry) so the 5-PR budget covers every ecosystem. Minors keep the built-in monorepo groups (group:monorepos via config:recommended) or get their own PR; majors use the family groups below",
+      "description": "Batch patch updates per package manager",
       "matchUpdateTypes": ["patch"],
       "groupName": "{{manager}} patch",
       "groupSlug": "{{manager}}-patch"
