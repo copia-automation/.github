@@ -38,10 +38,10 @@
       "enabled": false
     },
     {
-      "description": "Batch all non-major updates per manager (every manager, e.g. npm, gomod, nuget, poetry) so the 5-PR budget covers every ecosystem; majors stay individual",
-      "matchUpdateTypes": ["minor", "patch", "digest", "pinDigest"],
-      "groupName": "{{manager}} non-major",
-      "groupSlug": "{{manager}}-non-major"
+      "description": "Batch patch updates per package manager",
+      "matchUpdateTypes": ["patch"],
+      "groupName": "{{manager}} patch",
+      "groupSlug": "{{manager}}-patch"
     },
     {
       "description": "Family group for majors: eslint, its plugins/configs and parsers move together (9 of the top 20 repos). Built-in groups split them across eslint, typescript-eslint and stylistic",
