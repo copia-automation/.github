@@ -44,32 +44,33 @@
       "groupSlug": "{{manager}}-patch"
     },
     {
-      "description": "All action updates in one PR per repo; action majors rarely need code changes (~40 standalone major PRs across 18 repos). Renovate splits majors into major-github-actions",
+      "description": "All action updates in one PR per repo; action majors rarely need code changes (~40 standalone major PRs across 18 repos). Renovate splits majors into major-github-actions. Only uses: references, so runner OS bumps, container/service images and setup-action version inputs stay out",
       "matchManagers": ["github-actions"],
+      "matchDepTypes": ["action", "workflow"],
       "matchUpdateTypes": ["major", "minor", "patch", "digest"],
       "groupName": "github-actions",
       "groupSlug": "github-actions"
     },
     {
       "description": "Runtime group: one PR per Node version across Dockerfiles, .nvmrc and setup-node inputs. Includes patch because the per-manager patch rule splits them by file type. Exclusions mirror group:nodeJs",
-      "matchDatasources": ["docker", "node-version"],
-      "matchPackageNames": ["/(?:^|/)node$/", "!calico/node", "!docker.io/calico/node", "!ghcr.io/devcontainers/features/node", "!kindest/node", "!docker.io/kindest/node"],
+      "matchDatasources": ["docker", "node-version", "github-releases"],
+      "matchPackageNames": ["/(?:^|/)node$/", "actions/node-versions", "!calico/node", "!docker.io/calico/node", "!ghcr.io/devcontainers/features/node", "!kindest/node", "!docker.io/kindest/node"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "groupName": "node",
       "groupSlug": "node"
     },
     {
       "description": "Runtime group: one PR per Python version across Dockerfiles, .python-version and setup-python inputs. Includes patch for the same reason as node",
-      "matchDatasources": ["docker", "python-version"],
-      "matchPackageNames": ["/(?:^|/)python$/"],
+      "matchDatasources": ["docker", "python-version", "github-releases"],
+      "matchPackageNames": ["/(?:^|/)python$/", "actions/python-versions"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "groupName": "python",
       "groupSlug": "python"
     },
     {
-      "description": "Runtime group: one PR per Go version across golang images and go.mod go/toolchain directives. Includes patch for the same reason as node",
-      "matchDatasources": ["docker", "golang-version"],
-      "matchPackageNames": ["/(?:^|/)golang$/", "go"],
+      "description": "Runtime group: one PR per Go version across golang images, go.mod go/toolchain directives and setup-go inputs. Includes patch for the same reason as node",
+      "matchDatasources": ["docker", "golang-version", "github-releases"],
+      "matchPackageNames": ["/(?:^|/)golang$/", "go", "actions/go-versions"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "groupName": "go",
       "groupSlug": "go"
