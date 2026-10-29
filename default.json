@@ -12,18 +12,18 @@
   "updateNotScheduled": false,
   "hostRules": [
     {
-      "description": "Auth for private @copia-automation packages on GitHub Packages, using the RENOVATE_TOKEN secret stored in Mend (desktop-fork already uses it for this registry). Without it lockfile updates fail with 401",
+      "description": "Auth for private @copia-automation packages on GitHub Packages via the RENOVATE_TOKEN Mend secret; without it lockfile updates fail with 401",
       "matchHost": "npm.pkg.github.com",
       "hostType": "npm",
       "token": "{{ secrets.RENOVATE_TOKEN }}"
     }
   ],
   "lockFileMaintenance": {
-    "description": "Enabled weekly by config:best-practices; moved from its Monday 00:00-03:59 default into the Sunday routine window",
+    "description": "Enabled weekly by config:best-practices; moved into the Sunday window",
     "schedule": ["* 5-11 * * 0"]
   },
   "vulnerabilityAlerts": {
-    "description": "Dependabot security updates own vulnerability PRs: they fix transitive dependencies in yarn.lock, which Renovate cannot. Keep Dependabot alerts and security updates on in every repo that extends this preset",
+    "description": "Dependabot security updates own vulnerability PRs: they fix transitive dependencies in lockfiles, which Renovate cannot. Keep Dependabot alerts and security updates on in every repo that extends this preset",
     "enabled": false
   },
   "packageRules": [
@@ -44,7 +44,7 @@
       "groupSlug": "{{manager}}-patch"
     },
     {
-      "description": "All action updates in one PR per repo; action majors rarely need code changes (~40 standalone major PRs across 18 repos). Renovate splits majors into major-github-actions. Only uses: references, so runner OS bumps, container/service images and setup-action version inputs stay out",
+      "description": "All GitHub Actions updates. Only uses: references, so runner OS, container/service images and setup-action version inputs stay out",
       "matchManagers": ["github-actions"],
       "matchDepTypes": ["action", "workflow"],
       "matchUpdateTypes": ["major", "minor", "patch", "digest"],
@@ -52,7 +52,7 @@
       "groupSlug": "github-actions"
     },
     {
-      "description": "Runtime group: one PR per Node version across Dockerfiles, .nvmrc and setup-node inputs. Includes patch because the per-manager patch rule splits them by file type. Exclusions mirror group:nodeJs",
+      "description": "One PR per Node version across Dockerfiles, .nvmrc and setup-node inputs. Includes patch so the per-manager patch rule does not split them. Exclusions mirror group:nodeJs",
       "matchDatasources": ["docker", "node-version", "github-releases"],
       "matchPackageNames": ["/(?:^|/)node$/", "actions/node-versions", "!calico/node", "!docker.io/calico/node", "!ghcr.io/devcontainers/features/node", "!kindest/node", "!docker.io/kindest/node"],
       "matchUpdateTypes": ["major", "minor", "patch"],
@@ -60,7 +60,7 @@
       "groupSlug": "node"
     },
     {
-      "description": "Runtime group: one PR per Python version across Dockerfiles, .python-version and setup-python inputs. Includes patch for the same reason as node",
+      "description": "One PR per Python version across Dockerfiles, .python-version and setup-python inputs. Includes patch, as for node",
       "matchDatasources": ["docker", "python-version", "github-releases"],
       "matchPackageNames": ["/(?:^|/)python$/", "actions/python-versions"],
       "matchUpdateTypes": ["major", "minor", "patch"],
@@ -68,7 +68,7 @@
       "groupSlug": "python"
     },
     {
-      "description": "Runtime group: one PR per Go version across golang images, go.mod go/toolchain directives and setup-go inputs. Includes patch for the same reason as node",
+      "description": "One PR per Go version across golang images, go.mod go/toolchain directives and setup-go inputs. Includes patch, as for node",
       "matchDatasources": ["docker", "golang-version", "github-releases"],
       "matchPackageNames": ["/(?:^|/)golang$/", "go", "actions/go-versions"],
       "matchUpdateTypes": ["major", "minor", "patch"],
@@ -76,14 +76,14 @@
       "groupSlug": "go"
     },
     {
-      "description": "Runtime group: the uv image and the uv version in setup-uv inputs bump together (bedrock-agents got two PRs per release). Includes patch for the same reason as node",
+      "description": "The uv image and setup-uv version inputs bump together. Includes patch, as for node",
       "matchPackageNames": ["astral-sh/uv", "ghcr.io/astral-sh/uv", "uv"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "groupName": "uv",
       "groupSlug": "uv"
     },
     {
-      "description": "Family group: eslint, its plugins/configs and parsers move together (9 of the top 20 repos). Built-in groups split them across eslint, typescript-eslint and stylistic. Renovate splits majors into major-eslint",
+      "description": "eslint, its plugins/configs and parsers move together; the built-in groups split them across eslint, typescript-eslint and stylistic",
       "extends": ["packages:eslint"],
       "matchUpdateTypes": ["major", "minor"],
       "groupName": "eslint",
@@ -98,7 +98,7 @@
       "groupSlug": "eslint"
     },
     {
-      "description": "Family group: vite drags plugins and vitest with it (6 repos). Separate rules because one rule ANDs its matchers",
+      "description": "vite plugins and vitest move with vite. Separate rules because one rule ANDs its matchers",
       "extends": ["packages:vite"],
       "matchUpdateTypes": ["major", "minor"],
       "groupName": "vite",
@@ -112,7 +112,7 @@
       "groupSlug": "vite"
     },
     {
-      "description": "Family group: electron needs the packaging toolchain bumped too (4 repos). node-abi must know a new electron ABI before native modules rebuild",
+      "description": "electron needs its packaging toolchain bumped too; node-abi must know a new electron ABI before native modules rebuild",
       "matchDatasources": ["npm"],
       "matchPackageNames": ["electron", "@electron/**", "electron-builder", "electron-updater", "node-abi", "node-gyp"],
       "matchUpdateTypes": ["major", "minor"],
@@ -120,7 +120,7 @@
       "groupSlug": "electron"
     },
     {
-      "description": "Family group: webpack core, CLI/dev-server, loaders and plugins are coupled (4 repos; desktop-fork had 6 standalone loader/plugin PRs)",
+      "description": "webpack core, CLI/dev-server, loaders and plugins are coupled",
       "matchDatasources": ["npm"],
       "matchPackageNames": ["webpack", "webpack-cli", "@webpack-cli/**", "webpack-dev-server", "webpack-dev-middleware", "webpack-hot-middleware", "webpack-merge", "webpack-bundle-analyzer", "*-loader", "*-webpack-plugin"],
       "matchUpdateTypes": ["major", "minor"],
@@ -128,7 +128,7 @@
       "groupSlug": "webpack"
     },
     {
-      "description": "Family group: pytest plugins track pytest (4 repos)",
+      "description": "pytest plugins track pytest",
       "matchDatasources": ["pypi"],
       "matchPackageNames": ["pytest", "pytest-*"],
       "matchUpdateTypes": ["major", "minor"],
@@ -136,7 +136,7 @@
       "groupSlug": "pytest"
     },
     {
-      "description": "Family group: golang.org/x modules require each other (x/net needs x/sys) and are all v0, so every bump is a minor (5 repos)",
+      "description": "golang.org/x modules require each other (x/net needs x/sys) and are all v0, so every bump is a minor",
       "matchDatasources": ["go"],
       "matchPackageNames": ["golang.org/x/**"],
       "matchUpdateTypes": ["major", "minor"],
@@ -144,7 +144,7 @@
       "groupSlug": "golang-x"
     },
     {
-      "description": "Family group: terraform-aws-modules majors require matching hashicorp/aws provider majors (3 repos)",
+      "description": "terraform-aws-modules majors require matching hashicorp/aws provider majors",
       "matchDatasources": ["terraform-provider", "terraform-module"],
       "matchPackageNames": ["hashicorp/aws", "terraform-aws-modules/**"],
       "matchUpdateTypes": ["major", "minor"],
@@ -152,7 +152,7 @@
       "groupSlug": "terraform-aws"
     },
     {
-      "description": "Family group: Serilog sinks/extensions track Serilog majors (4 .NET repos)",
+      "description": "Serilog sinks and extensions track Serilog majors",
       "matchDatasources": ["nuget"],
       "matchPackageNames": ["Serilog", "Serilog.*"],
       "matchUpdateTypes": ["major", "minor"],
@@ -160,7 +160,7 @@
       "groupSlug": "serilog"
     },
     {
-      "description": "Family group: xunit, its VS runner, the test SDK and coverlet move together (schneider-server, acd-converter). The built-in xunit-dotnet group misses the runner and SDK",
+      "description": "xunit, its VS runner, the test SDK and coverlet move together; the built-in xunit-dotnet group misses the runner and SDK",
       "matchDatasources": ["nuget"],
       "matchPackageNames": ["xunit", "xunit.*", "Microsoft.NET.Test.Sdk", "coverlet.*"],
       "matchUpdateTypes": ["major", "minor"],
@@ -168,7 +168,7 @@
       "groupSlug": "dotnet-test"
     },
     {
-      "description": "WixToolset packages must share one version (zap2zip-server), so patches join too",
+      "description": "WixToolset packages must share one version, so patches join too",
       "matchDatasources": ["nuget"],
       "matchPackageNames": ["WixToolset.*"],
       "matchUpdateTypes": ["major", "minor", "patch"],
@@ -176,7 +176,15 @@
       "groupSlug": "wixtoolset"
     },
     {
-      "description": "Storybook packages must share one version (gitea-fork, desktop-fork). Own group so a Storybook regression cannot block the npm batch; majors split into major-storybook. Last so it beats the eslint group for eslint-plugin-storybook. The chromatic CLI versions independently",
+      "description": "dd-trace-go v2, its contrib/* modules, the v1 shim (v1.74+ wraps v2) and orchestrion must share one release, so patches join too. A core-only bump breaks the build",
+      "matchDatasources": ["go"],
+      "matchPackageNames": ["github.com/DataDog/dd-trace-go/**", "gopkg.in/DataDog/dd-trace-go.v1", "github.com/DataDog/orchestrion"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "groupName": "dd-trace-go",
+      "groupSlug": "dd-trace-go"
+    },
+    {
+      "description": "Storybook packages must share one version. Own group so a Storybook regression cannot block the npm batch. Last so it beats the eslint group for eslint-plugin-storybook. The chromatic CLI versions independently",
       "matchDatasources": ["npm"],
       "matchPackageNames": ["storybook", "@storybook/**", "eslint-plugin-storybook", "@chromatic-com/storybook", "storybook-addon-*", "*-storybook-addon"],
       "matchUpdateTypes": ["major", "minor", "patch"],
