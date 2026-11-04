@@ -2,8 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Copia org-wide Renovate base policy. Extend with local>copia-automation/.github",
   "extends": [
-    "config:best-practices",
-    "security:minimumReleaseAgePypi"
+    "config:best-practices"
   ],
   "labels": ["dependencies"],
   "rebaseWhen": "conflicted",
@@ -29,7 +28,7 @@
   },
   "packageRules": [
     {
-      "description": "7-day cooldown for the registries that publish release timestamps; raises the npm and PyPI presets' 3 days. Docker is left out: GHCR, ECR and quay.io have no timestamps, so their updates would stay pending forever",
+      "description": "7-day cooldown for the registries that publish release timestamps; raises best-practices' 3 days for npm. Docker is left out: GHCR, ECR and quay.io have no timestamps, so their updates would stay pending forever",
       "matchDatasources": ["npm", "pypi", "go", "github-tags", "github-releases", "nuget", "terraform-provider", "terraform-module"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "minimumReleaseAge": "7 days",
