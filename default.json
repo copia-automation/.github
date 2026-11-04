@@ -2,7 +2,8 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Copia org-wide Renovate base policy. Extend with local>copia-automation/.github",
   "extends": [
-    "config:best-practices"
+    "config:best-practices",
+    "security:minimumReleaseAgePypi"
   ],
   "labels": ["dependencies"],
   "rebaseWhen": "conflicted",
@@ -27,6 +28,18 @@
     "enabled": false
   },
   "packageRules": [
+    {
+      "description": "3-day cooldown for the registries that publish release timestamps, on top of the npm and PyPI presets. Docker is left out: GHCR, ECR and quay.io have no timestamps, so their updates would stay pending forever",
+      "matchDatasources": ["go", "github-tags", "github-releases", "nuget", "terraform-provider", "terraform-module"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "minimumReleaseAge": "3 days",
+      "internalChecksFilter": "strict"
+    },
+    {
+      "description": "Our own packages and modules skip the cooldown; GitHub Packages and private Go modules may not publish timestamps",
+      "matchPackageNames": ["@copia-automation/**", "github.com/copia-automation/**"],
+      "minimumReleaseAge": null
+    },
     {
       "description": "Rollbacks and replacements should be deliberate human calls, not bot PRs",
       "matchUpdateTypes": ["rollback", "replacement"],
