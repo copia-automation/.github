@@ -80,9 +80,9 @@
       "groupSlug": "python"
     },
     {
-      "description": "One PR per Go version across golang images, go.mod go/toolchain directives and setup-go inputs. Includes patch, as for node",
+      "description": "One PR per Go version across golang and Chainguard go images, go.mod go/toolchain directives and setup-go inputs. Includes patch, as for node",
       "matchDatasources": ["docker", "golang-version", "github-releases"],
-      "matchPackageNames": ["/(?:^|/)golang$/", "go", "actions/go-versions"],
+      "matchPackageNames": ["/(?:^|/)golang$/", "cgr.dev/copia.io/go", "go", "actions/go-versions"],
       "matchUpdateTypes": ["major", "minor", "patch"],
       "groupName": "go",
       "groupSlug": "go"
