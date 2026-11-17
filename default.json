@@ -80,10 +80,18 @@
       "groupSlug": "python"
     },
     {
-      "description": "One PR per Go version across golang images, go.mod go/toolchain directives and setup-go inputs. Includes patch, as for node",
+      "description": "One PR per Go version across golang and Chainguard go images, go.mod go/toolchain directives and setup-go inputs. Includes patch, as for node",
       "matchDatasources": ["docker", "golang-version", "github-releases"],
-      "matchPackageNames": ["/(?:^|/)golang$/", "go", "actions/go-versions"],
+      "matchPackageNames": ["/(?:^|/)golang$/", "cgr.dev/copia.io/go", "go", "actions/go-versions"],
       "matchUpdateTypes": ["major", "minor", "patch"],
+      "groupName": "go",
+      "groupSlug": "go"
+    },
+    {
+      "description": "Chainguard ships Go patches as a new digest under the same tag (1.26-dev), and its image sets GOTOOLCHAIN=local, so the digest bump must land in the same PR as the go.mod bump",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["cgr.dev/copia.io/go"],
+      "matchUpdateTypes": ["digest"],
       "groupName": "go",
       "groupSlug": "go"
     },
