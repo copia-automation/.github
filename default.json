@@ -88,6 +88,14 @@
       "groupSlug": "go"
     },
     {
+      "description": "Chainguard ships Go patches as a new digest under the same tag (1.26-dev), and its image sets GOTOOLCHAIN=local, so the digest bump must land in the same PR as the go.mod bump",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["cgr.dev/copia.io/go"],
+      "matchUpdateTypes": ["digest"],
+      "groupName": "go",
+      "groupSlug": "go"
+    },
+    {
       "description": "The uv image and setup-uv version inputs bump together. Includes patch, as for node",
       "matchPackageNames": ["astral-sh/uv", "ghcr.io/astral-sh/uv", "uv"],
       "matchUpdateTypes": ["major", "minor", "patch"],
