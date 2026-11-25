@@ -26,6 +26,24 @@
     "description": "Dependabot security updates own vulnerability PRs: they fix transitive dependencies in lockfiles, which Renovate cannot. Keep Dependabot alerts and security updates on in every repo that extends this preset",
     "enabled": false
   },
+  "customDatasources": {
+    "chainctl": {
+      "description": "Newest chainctl release, read from Chainguard's metadata.json. Only the latest version is listed, so no cooldown can apply",
+      "defaultRegistryUrlTemplate": "https://dl.enforce.dev/chainctl/latest/metadata.json",
+      "transformTemplates": ["{\"releases\": [{\"version\": version}]}"]
+    }
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "The chainctl version input of setup-chainctl, where a '# renovate: chainctl' comment sits directly above version:. Pinned because latest can serve a mismatched binary and checksums for up to an hour after a release",
+      "managerFilePatterns": ["/^\\.github/workflows/.+\\.ya?ml$/"],
+      "matchStrings": ["# renovate: chainctl\\s+version:\\s*[\"']?(?<currentValue>[0-9.]+)[\"']?"],
+      "depNameTemplate": "chainctl",
+      "datasourceTemplate": "custom.chainctl",
+      "versioningTemplate": "semver"
+    }
+  ],
   "packageRules": [
     {
       "description": "7-day cooldown for the registries that publish release timestamps; raises best-practices' 3 days for npm. Docker is left out: GHCR, ECR and quay.io have no timestamps, so their updates would stay pending forever",
@@ -210,6 +228,12 @@
       "matchUpdateTypes": ["major", "minor", "patch"],
       "groupName": "storybook",
       "groupSlug": "storybook"
+    },
+    {
+      "description": "The chainctl pin gets its own PR instead of joining the per-manager patch group",
+      "matchDatasources": ["custom.chainctl"],
+      "groupName": "chainctl",
+      "groupSlug": "chainctl"
     }
   ]
 }
